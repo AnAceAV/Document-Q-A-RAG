@@ -1,0 +1,4 @@
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+FAISS_PATH = "storage/faiss_index"
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 50
