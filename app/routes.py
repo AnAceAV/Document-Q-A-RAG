@@ -12,6 +12,10 @@ embedder = Embedder()
 vector_store = None
 chunks_cache = []
 
+@router.get("/")
+def root():
+    return {"message": "Document Q&A RAG System", "endpoints": {"upload": "POST /upload", "ask": "POST /ask"}}
+
 @router.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     global vector_store, chunks_cache
