@@ -148,8 +148,3 @@ curl -H "Content-Type: application/json" -d '{"question":"What is this document 
 - Add batching and streaming responses for long LLM calls
 
 ---
-
-## License & Credits
-This project is provided as-is. Cite or credit any model or library authors when using their models or code.
-
-If you want, I can also add a short `RUNNING.md` with step-by-step screenshots for Windows.
