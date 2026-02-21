@@ -14,7 +14,15 @@ chunks_cache = []
 
 @router.get("/")
 def root():
-    return {"message": "Document Q&A RAG System", "endpoints": {"upload": "POST /upload", "ask": "POST /ask"}}
+    return {
+        "message": "Document Q&A RAG System",
+        "status": "running",
+        "endpoints": {
+            "upload": "POST /upload",
+            "ask": "POST /ask",
+            "frontend": "GET /"
+        }
+    }
 
 @router.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
@@ -32,7 +40,12 @@ async def upload_pdf(file: UploadFile = File(...)):
     vector_store.add(embeddings)
 
     chunks_cache = chunks
-    return {"message": "PDF processed successfully"}
+    return {
+        "message": "PDF processed successfully",
+        "filename": file.filename,
+        "chunks_count": len(chunks),
+        "text_length": len(text)
+    }
 
 @router.post("/ask")
 def ask_question(req: QuestionRequest):

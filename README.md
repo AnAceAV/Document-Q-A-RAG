@@ -18,6 +18,8 @@ local models (Ollama) or cloud models (OpenAI), and use the API endpoints.
 
 ## Repo layout
 - `app/` — FastAPI application and endpoints (`app/main.py`, `app/routes.py`)
+- `app/templates/` — HTML frontend (`index.html`)
+- `app/static/` — CSS, JavaScript, and other static assets
 - `app/services/` — service modules: `pdf_loader`, `chunker`, `embedder`,
   `vector_store`, `retriever`, `generator`
 - `storage/faiss_index/` — persisted vector index (if used)
@@ -26,6 +28,7 @@ local models (Ollama) or cloud models (OpenAI), and use the API endpoints.
 Files to check:
 - `app/main.py` ([app/main.py](app/main.py))
 - `app/routes.py` ([app/routes.py](app/routes.py))
+- `app/templates/index.html` ([app/templates/index.html](app/templates/index.html))
 - `app/services/generator.py` ([app/services/generator.py](app/services/generator.py))
 
 ---
@@ -103,23 +106,43 @@ python -m uvicorn app.main:app --reload
 
 The API will be available at `http://127.0.0.1:8000`.
 
-### Endpoints
-- `GET /` — welcome message and available endpoints
-- `POST /upload` — upload a PDF
+### Using the Web Frontend
+
+Once the server is running, simply open `http://localhost:8000` in your browser to access the interactive web interface:
+
+- **Upload Documents**: Drag & drop or click to upload PDF files
+- **Ask Questions**: Type natural language questions about your document
+- **View Results**: Get AI-generated answers in real-time
+- **Track Progress**: See file upload status and statistics
+
+The frontend features include:
+- Modern, responsive UI with drag-and-drop file upload
+- Real-time progress indicators
+- Visual error/success alerts
+- Support for multiple file uploads
+- Statistics tracking (files uploaded, chunks created)
+
+### REST API Endpoints
+
+For programmatic access, you can use the following endpoints:
+
+- `GET /` — serves the frontend interface
+- `GET /api/` — welcome message and available endpoints
+- `POST /api/upload` — upload a PDF
   - Body: `form-data` with key `file` (type: File)
-- `POST /ask` — ask a question
+- `POST /api/ask` — ask a question
   - Body: JSON `{ "question": "..." }`
 
 Example using `curl`:
 
 Upload:
 ```bash
-curl -F "file=@/path/to/document.pdf" http://127.0.0.1:8000/upload
+curl -F "file=@/path/to/document.pdf" http://127.0.0.1:8000/api/upload
 ```
 
 Ask:
 ```bash
-curl -H "Content-Type: application/json" -d '{"question":"What is this document about?"}' http://127.0.0.1:8000/ask
+curl -H "Content-Type: application/json" -d '{"question":"What is this document about?"}' http://127.0.0.1:8000/api/ask
 ```
 
 ---

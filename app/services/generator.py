@@ -1,6 +1,6 @@
 from langchain_ollama import OllamaLLM
 
-llm = OllamaLLM(model="phi", base_url="http://localhost:11434")
+llm = OllamaLLM(model="neural-chat", base_url="http://localhost:11434")
 
 def generate_answer(context_chunks, question):
     context = "\n".join(context_chunks)
